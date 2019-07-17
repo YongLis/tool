@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +15,7 @@ import java.security.Security;
 import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.bcpg.ArmoredOutputStream;
 import org.bouncycastle.bcpg.PublicKeyAlgorithmTags;
 import org.bouncycastle.bcpg.sig.KeyFlags;
@@ -46,8 +46,6 @@ import org.bouncycastle.openpgp.operator.bc.BcPGPDataEncryptorBuilder;
 import org.bouncycastle.openpgp.operator.bc.BcPGPDigestCalculatorProvider;
 import org.bouncycastle.openpgp.operator.bc.BcPublicKeyDataDecryptorFactory;
 import org.bouncycastle.openpgp.operator.bc.BcPublicKeyKeyEncryptionMethodGenerator;
-import org.bouncycastle.openpgp.operator.jcajce.JcePGPDataEncryptorBuilder;
-import org.bouncycastle.openpgp.operator.jcajce.JcePublicKeyKeyEncryptionMethodGenerator;
 
 public class PGPUtils {
 	private static final int BUFFER_SIZE = 1 << 16; // should always be power of
@@ -396,7 +394,18 @@ public class PGPUtils {
 		String privateKeyFile = "C:\\Users\\iPayLinks\\Desktop\\ipaylinks配置\\privateKey.asc";
 		
 		
-		encrypt(sourceFile, targetFile, publicKeyFile, null);
+//		encrypt(sourceFile, targetFile, publicKeyFile, null);
 //		decrypt(targetFile, privateKeyFile);
+		
+		int a = 208;
+		double b=5;
+		System.out.println((int)Math.ceil(a/b));
+		
+		String cerCode = "420683198902231";
+		if(StringUtils.isNotEmpty(cerCode)){
+//            System.out.println(cerCode.substring( 6,14));
+            System.out.println(cerCode.substring(14));
+        }
+		
 	}
 }

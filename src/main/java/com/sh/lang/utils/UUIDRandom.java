@@ -13,6 +13,10 @@ public class UUIDRandom {
 	public static String generate() {
 		return UUID.randomUUID().toString().replace("-", "").toUpperCase();
 	}
+	
+	public static String generateUUID() {
+		return UUID.randomUUID().toString();
+	}
 
 	public static void main(String[] args) {
 		for(int i=0; i<5000000; i++){

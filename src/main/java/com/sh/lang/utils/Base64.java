@@ -1,17 +1,5 @@
 package com.sh.lang.utils;
 
-/**
- * This class provides encode/decode for RFC 2045 Base64 as defined by RFC 2045,
- * N. Freed and N. Borenstein. RFC 2045: Multipurpose Internet Mail Extensions
- * (MIME) Part One: Format of Internet Message Bodies. Reference 1996 Available
- * at: http://www.ietf.org/rfc/rfc2045.txt This class is used by XML Schema
- * binary format validation
- * This implementation does not encode/decode streaming data. You need the data
- * that you will encode/decode already on a byte arrray.
- * 
- * @author youmeng@alipay.com
- * @version $Id: Base64.java,v 0.1 2009-7-15 涓嬪崍01:07:08 youmeng Exp $
- */
 public final class Base64 {
 
     static private final int     BASELENGTH           = 128;

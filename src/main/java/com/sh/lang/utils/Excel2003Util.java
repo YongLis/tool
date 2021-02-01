@@ -1,26 +1,20 @@
 package com.sh.lang.utils;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.hssf.util.HSSFCellUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +93,7 @@ public class Excel2003Util {
 		
 		try {
 			HSSFWorkbook workbook = getWorkbook(list);
-			workbook.write(new File(fileName));
+			workbook.write(new FileOutputStream(new File(fileName)));
 		} catch (Exception e) {
 			logger.error("excel文件生成错误", e);
 		}
@@ -147,7 +141,7 @@ public class Excel2003Util {
 		HSSFRow row = sheet.createRow(0);
 		
 		for(int i=0; i<title.length; i++){
-			HSSFCell cell = row.createCell(i, CellType.STRING);
+			HSSFCell cell = row.createCell(i, HSSFCell.CELL_TYPE_STRING);
 			cell.setCellValue(title[i]);
 		}
 		
@@ -157,15 +151,15 @@ public class Excel2003Util {
 	
 	private static String getCellValue(HSSFCell cell){
 		if(cell != null){
-			if(cell.getCellType().equals(CellType.BOOLEAN)){
+			if(cell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN){
 				return cell.getBooleanCellValue()+"";
 			}
 			
-			if(cell.getCellType().equals(CellType.NUMERIC)){
+			if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC){
 				return cell.getNumericCellValue()+"";
 			}
 			
-			if(cell.getCellType().equals(CellType.STRING)){
+			if(cell.getCellType() == HSSFCell.CELL_TYPE_STRING){
 				return cell.getStringCellValue();
 			}
 			
@@ -175,25 +169,42 @@ public class Excel2003Util {
 	}
 
 	public static void main(String[] args) {
-		SheetEntity sheetEntity = new SheetEntity();
-		sheetEntity.setSheetName("名单");
-		String[] title = {"编号","姓名", "年龄","性别"};
-		sheetEntity.setTitle(title);
-		List<String[]> data = new ArrayList<String[]>();	
-		for(int i=0; i<100; i++){
-			String[] tmp = new String[title.length];
-			tmp[0] = "stu"+i;
-			tmp[1] = "tom";
-			tmp[2] = "28";
-			tmp[3] = "男";
-			data.add(tmp);
+//		SheetEntity sheetEntity = new SheetEntity();
+//		sheetEntity.setSheetName("名单");
+//		String[] title = {"编号","姓名", "年龄","性别"};
+//		sheetEntity.setTitle(title);
+//		List<String[]> data = new ArrayList<String[]>();	
+//		for(int i=0; i<100; i++){
+//			String[] tmp = new String[title.length];
+//			tmp[0] = "stu"+i;
+//			tmp[1] = "tom";
+//			tmp[2] = "28";
+//			tmp[3] = "男";
+//			data.add(tmp);
+//		}
+//		
+//		sheetEntity.setDataList(data);
+//		List<SheetEntity> sheetEntities = new ArrayList<SheetEntity>();
+//		sheetEntities.add(sheetEntity);
+//		
+//		createExcel(sheetEntities, "D:\\tmp\\cel"+new Random().nextInt()+".xls");
+		
+		 String filepath = "D:\\tmp\\Book2.xls";
+         try {
+			List<SheetEntity> list = readExcel(new FileInputStream(filepath));
+			System.out.println(list.size());
+			List<ExecSheetEntity> sheetEntities = new ArrayList<ExecSheetEntity>();
+			for(int i=0;i<list.size(); i++){
+				SheetEntity sheetEntity = list.get(i);
+			}
+			
+			
+			XSSFWorkbook xssfWorkbook = Excel2007Util.getMutilSheetWorkBook(sheetEntities);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		sheetEntity.setDataList(data);
-		List<SheetEntity> sheetEntities = new ArrayList<SheetEntity>();
-		sheetEntities.add(sheetEntity);
-		
-		createExcel(sheetEntities, "D:\\tmp\\cel"+new Random().nextInt()+".xls");
 		
 	}
 
